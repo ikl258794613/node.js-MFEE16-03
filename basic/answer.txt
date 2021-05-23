@@ -20,6 +20,8 @@ foo
 baz
 bar
 
+有callback 寫在裡面的會晚點執行
+
 執行結果
 1.
 start
