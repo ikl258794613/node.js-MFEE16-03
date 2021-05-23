@@ -22,25 +22,21 @@ bar
 
 有callback 寫在裡面的會晚點執行
 
-執行結果
-1.
-start
-IIFE
-end
-Timeout
+// (1) 請問下列程式執行後的結果為何？為什麼？
 
-2.
-start
-IIFE
-end
-Timeout
+console.log("start");
 
-3.
-foo
-bar
-baz
+(function () {
+  console.log("IIFE");
+  setTimeout(function () {
+    console.log("Timeout");
+  }, 1000);
+})();
 
-4.
-foo
-baz
-bar
+console.log("end");
+
+寫在callback裡面的會被先丟到webapi再進去task queue內等待stack中任務都結束再讀取。
+所以順序為start IIFE end Timeout
+
+(2)就算setTimeOut寫0秒也會被放進task queue內等待。所以Timeout會最後出現
+(4)同上
