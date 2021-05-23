@@ -48,3 +48,49 @@ const foo = () => {
 };
 
 foo();
+
+//自己認為的
+// 1.      
+// start
+// IIFE
+// end
+// Timeout
+
+// 2.
+// start
+// IIFE
+// end
+// Timeout
+
+// 3.
+// foo
+// bar
+// baz
+
+// 4.
+// foo
+// baz
+// bar
+
+//實際解答
+// 1.
+// start
+// IIFE
+// end
+// Timeout
+
+// 2.
+// start
+// IIFE
+// end
+// Timeout
+
+// 3.
+// foo
+// bar
+// baz
+
+// 4.
+// foo
+// baz
+// bar
