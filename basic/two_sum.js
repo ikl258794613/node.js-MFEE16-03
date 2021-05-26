@@ -25,4 +25,22 @@ twoSum([1, 6, 4, 5, 3, 3], 7);
 
 // 2.Hash寫法
 
+function twoSum (numsArray,target){
+    let passPair = [];
+    let notPassPair = [];
+    for(let currNum of numsArray){
+        let counterPart = target - currNum;
+        let counterPartIndex = notPassPair.indexOf(counterPart);
+        if( counterPartIndex !== -1){
+            notPassPair.splice(counterPartIndex,1);
+            passPair.push([currNum,counterPart]);
+        }else{
+            notPassPair.push(currNum)
+        }
+    }
+    return passPair;
+}
+twoSum([1, 6, 4, 5, 3, 3], 7);
+
+
 
