@@ -1,6 +1,16 @@
 const axios = require('axios').default;
 
-axios.get('https://www.twse.com.tw/exchangeReport/STOCK_DAY?response=json&date=20210524&stockNo=0050&_=1621845900774')
+axios.get('https://www.twse.com.tw/exchangeReport/STOCK_DAY?',{
+    params: {
+      response: "json",
+      date: "202105026",
+      stockNo: "0050",
+    },
+  },{
+    headers: {
+        'Content-Type': 'application/json',
+    }
+  })
     .then(function (response) {
         // handle success
         console.log(response);
