@@ -44,3 +44,20 @@ twoSum([1, 6, 4, 5, 3, 3], 7);
 
 
 
+//3.加上Map
+
+function twoSum (numsArray,target){
+    let notPassPair = new Map();
+    let passPair =[];
+    for (let i = 0; i<numsArray.length; i++){
+        let counterPart = target - numsArray[i];
+        if(notPassPair.has(counterPart)){
+            notPassPair.delete(counterPart);
+            passPair.push(numsArray[i],counterPart);
+        }else{
+            notPassPair.set(numsArray[i],'')
+        }
+    }
+    return passPair;
+}
+twoSum([1, 6, 4, 5, 3, 3], 7);
