@@ -1,5 +1,9 @@
 const axios = require("axios");
 const fs = require("fs");
+const moment = require("moment");
+
+let today = moment().format("YYYYMMDD"); 
+console.log(today);
 
 function stockPromise(fileName) {
   return new Promise((resolve, reject) => {
@@ -18,7 +22,7 @@ async function stockawait() {
         {
           params: {
             response: "json",
-            date: 20210526,
+            date: today,
             stockNo: stockNO,
           },
         },
@@ -30,7 +34,7 @@ async function stockawait() {
       )
         console.log(axiosAwait.data) 
   } catch(error){
-    console.log(error);
+    console.log(error); 
   } finally {
   }
 }
