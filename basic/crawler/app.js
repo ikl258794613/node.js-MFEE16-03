@@ -1,5 +1,8 @@
 const axios = require("axios").default;
 const fs = require("fs");
+//時間處理怪怪的，Date的時間要研究一下，目前抓的時間點是109年12月另外今天是假日應該沒有今天的股票資料
+const today = new Date()
+
 
 // let stockNo = fs.readFile('stock.txt','utf-8',(err,data)=>{
 //   if (err) {
@@ -7,6 +10,7 @@ const fs = require("fs");
 //   }
 //   console.log(`讀到的 stock code: ${data}`);
 // })
+
 function stockPromise(fileName) {
   return new Promise((resolve, reject) => {
     fs.readFile(fileName, "utf-8", (err, data) => {
@@ -15,6 +19,7 @@ function stockPromise(fileName) {
   });
 }
 
+
 stockPromise("stock.txt").then((result) => {
   axios
     .get(
@@ -22,7 +27,7 @@ stockPromise("stock.txt").then((result) => {
       {
         params: {
           response: "json",
-          date: "202105026",
+          date: today,
           stockNo: result,
         },
       },
