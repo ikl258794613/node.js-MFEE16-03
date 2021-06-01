@@ -17,15 +17,14 @@ async function stockawait() {
   try {
     let stock = await stockPromise("stock.txt");
     let stockNo = await stock.split(",");
-    for (let i = 0; i <= stockNo.length; i++) {
-      let X = stockNo[i];
+    for (let i of stockNo) {
       let axiosAwait = await axios.get(
         "https://www.twse.com.tw/exchangeReport/STOCK_DAY?",
         {
           params: {
             response: "json",
             date: today,
-            stockNo: X,
+            stockNo: i,
           },
         },
         {
@@ -34,7 +33,7 @@ async function stockawait() {
           },
         }
       );
-      console.log(axiosAwait.data);
+      console.log(axiosAwait.data.title);
     }
   } catch (error) {
     console.log(error);
