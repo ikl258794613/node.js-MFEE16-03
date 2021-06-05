@@ -1,6 +1,7 @@
 const axios = require("axios");
 const Promise = require("bluebird");
 const moment = require("moment");
+const fs = require("fs");
 const readFileblue = Promise.promisify(fs.readFile);
 let today = moment().format("YYYYMMDD");
 console.log(today);
@@ -9,6 +10,7 @@ console.log(today);
 //   return new Promise((resolve, reject) => {
 //     fs.readFile(fileName, "utf-8", (err, data) => {
 //       err ? reject(err) : resolve(data);
+
 //     });
 //   });
 // }
