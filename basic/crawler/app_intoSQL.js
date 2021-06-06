@@ -5,10 +5,10 @@ const mysql = require("mysql");
 const Promise = require("bluebird");
 
 let connection = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "FAKEpassword",
-  database: "node",
+  host: process.env.DB_HOST,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASS,
+  database: process.env.DB_DATABASE,
 });
 
 connection = Promise.promisifyAll(connection);
