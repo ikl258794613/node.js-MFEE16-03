@@ -3,7 +3,7 @@ const fs = require("fs/promises");
 const moment = require("moment");
 const mysql = require("mysql");
 const Promise = require("bluebird");
-
+require("dotenv").config();
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
