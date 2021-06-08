@@ -1,8 +1,6 @@
 const http = require("http");
 const { URL } = require("url");
 const fs = require("fs/promises");
-const Promise = require("bluebird");
-const readFileblue = Promise.promisify(fs.readFile);
 
 const server = http.createServer(async (req, res) => {
   console.log("已連線");
