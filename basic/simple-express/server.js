@@ -5,17 +5,24 @@ let app = express();
 
 //中介函式
 app.use(express.static("public"));
+//第一個views是變數，第2個是資料夾名稱
+app.set("views", "views");
+app.set("view engine", "pug");
+
 app.use(function (req, res, next) {
   console.log(`有人在${today}來訪問`);
   next();
 });
 
 app.get("/", function (req, res) {
-  res.send("index");
+  // res.send("Hello Express BBB");
+  res.render("index");
+  // views/index.pug
 });
 
-app.get("/about", function (req, res) {
-  res.send("about A");
+app.get("/about", function (req, res, next) {
+  // res.send("About Express AAAA");
+  res.render("about");
 });
 // app.get("/about", function(req,res){
 //   res.send("about B")
