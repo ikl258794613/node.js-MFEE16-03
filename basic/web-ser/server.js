@@ -15,9 +15,10 @@ const server = http.createServer(async (req, res) => {
   res.statusCode = 200; // 2xx, 3xx, 4xx, 5xx
   res.setHeader("Content-Type", "text/plain;charset=UTF-8");
   //router
-  switch (req.url) {
-    case "/":
+  switch (path) {
+    case "":
       res.end("首頁");
+      console.log(`path:${path}`);
       break;
     case "/test":
       res.setHeader("Content-Type", "text/html;charset=UTF-8");
