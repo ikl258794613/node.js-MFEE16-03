@@ -4,12 +4,11 @@ let today = moment().format();
 let app = express();
 
 //中介函式
+app.use(express.static("public"));
 app.use(function (req, res, next) {
   console.log(`有人在${today}來訪問`);
   next();
 });
-
-app.use(express.static("public"));
 
 app.get("/", function (req, res) {
   res.send("index");
