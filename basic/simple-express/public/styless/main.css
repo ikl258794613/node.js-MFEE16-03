@@ -1,0 +1,16 @@
+table {
+  border: 1px solid rgb(170, 118, 55);
+}
+
+th,
+td {
+  text-align: center;
+}
+
+th {
+  background: rgb(164, 241, 218);
+}
+
+td {
+  background-color: rgb(132, 171, 243);
+}
