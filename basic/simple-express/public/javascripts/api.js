@@ -13,6 +13,14 @@
 //     .always(function () {});
 // });
 
+// fetch('/api/stocks')
+//   .then(function(response) {
+//     return response.json();
+//   })
+//   .then(function(myJson) {
+//     console.log(myJson);
+//   });
+
 axios
   .get("/api/stocks")
   .then(function (data) {
