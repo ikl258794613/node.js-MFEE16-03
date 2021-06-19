@@ -6,7 +6,8 @@ html
     link(rel="stylesheet", href="/styless/main.css")
     //- 因為app.use(express.static("public"))寫這樣，href寫這樣就好 href="/styless/main.css"
     //-href寫href="public/styless/main.css" 反而讀不到CSS， https://stackoverflow.com/questions/48248832/stylesheet-not-loaded-because-of-mime-type
-    script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    //- script(src="https://code.jquery.com/jquery-3.6.0.min.js")
+    script(src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js")
     block scripts
   body
     include header 

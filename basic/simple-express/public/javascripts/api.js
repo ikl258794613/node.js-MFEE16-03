@@ -1,14 +1,24 @@
-$(function () {
-  $.ajax({
-    method: "GET",
-    url: "/api/stocks",
-    dataType: "json",
+// $(function () {
+//   $.ajax({
+//     method: "GET",
+//     url: "/api/stocks",
+//     dataType: "json",
+//   })
+//     .done(function (data) {
+//       console.log(data);
+//     })
+//     .fail(function (error) {
+//       console.log(error);
+//     })
+//     .always(function () {});
+// });
+
+axios
+  .get("/api/stocks")
+  .then(function (data) {
+    console.log(data.data);
   })
-    .done(function (data) {
-      console.log(data);
-    })
-    .fail(function (error) {
-      console.log(error);
-    })
-    .always(function () {});
-});
+  .catch(function (error) {
+    console.log(error);
+  })
+  .then(function () {});
