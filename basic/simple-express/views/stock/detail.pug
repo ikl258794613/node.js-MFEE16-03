@@ -1,7 +1,7 @@
 extends ../_layouts/master
 
 block content
-  h1 股票細節
+  h1 股票細節:#{stockCheck.stock_name}
   table
     tr 
       th 日期
@@ -16,3 +16,6 @@ block content
         td #{price.high_price}
         td #{price.low_price}
         td #{price.close_price}
+    .pagination
+      -for(var p = 1; p<=pagination.lastPage;p++)
+        a(href = `/stock/${stockCheck.stock_id}?page=${p}`,class=p==pagination.currentPage?"active":"") #{p}

@@ -16,12 +16,43 @@ router.get("/", async function (req, res) {
 });
 
 router.get("/:stockCode", async (req, res) => {
+  let stockCheck = await connection.queryAsync(
+    "SELECT * FROM stock WHERE stock_id = ?",
+    req.params.stockCode
+  );
+  //   if (stockCheck.length == 0) {
+  //     throw new Error("無此代碼");
+  //   }
+  stockCheck = stockCheck[0];
+  console.log(stockCheck);
+  //   無此代碼這段沒效果
   let result = await connection.queryAsync(
     "SELECT * FROM stock_price WHERE stock_id = ? ORDER BY date",
     req.params.stockCode
   );
+  let count = await connection.queryAsync(
+    "SELECT COUNT(*) as total FROM stock_price WHERE stock_id=?;",
+    req.params.stockCode
+  );
+  console.log(count); //[ RowDataPacket { total: 12 } ]
+  const totalCount = count[0].total;
+  const perPage = 5;
+  const lastPage = Math.ceil(totalCount / perPage);
+  const currentPage = req.query.page || 1; // page頁 預設第一頁
+  const offset = (currentPage - 1) * perPage;
+  let resultsPrices = await connection.queryAsync(
+    "SELECT * FROM stock_price WHERE stock_id = ? ORDER BY date LIMIT ? OFFSET ?;",
+    [req.params.stockCode, perPage, offset]
+  );
+
   res.render("stock/detail", {
-    stockPrices: result,
+    stockCheck,
+    stockPrices: resultsPrices,
+    pagination: {
+      lastPage,
+      currentPage,
+      totalCount,
+    },
   });
 });
 
