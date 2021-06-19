@@ -11,7 +11,12 @@ app.use(express.static("public"));
 //第一個views是變數，第2個是資料夾名稱
 app.set("views", "views");
 app.set("view engine", "pug");
+//中介函式
 
+let stockRouter = require("./routes/stock");
+app.use("/stock", stockRouter);
+
+//路由
 app.use(function (req, res, next) {
   console.log(`有人在${today}來訪問`);
   next();
@@ -34,29 +39,6 @@ app.get("/about", function (req, res, next) {
 
 app.get("/test", function (req, res) {
   res.send("test");
-});
-
-app.get("/stock", async function (req, res) {
-  let result = await connection.queryAsync("SELECT * FROM stock");
-  //console.log(`目前有${stocks}這些資料`);
-  //[object Object],[object Object],[object Object],[object Object],[object Object]
-  //console.log 一堆[object Object] 但是在網頁上能顯示? 老師上課也能正常顯示
-  //console.log(`目前有${stocks.stock_name}這些資料`);
-  //目前有undefined這些資料
-  // console.log  stocks.stock_name 結果 undefined ??
-  res.render("stock/list", {
-    stocks: result,
-  });
-});
-
-app.get("/stock/:stockCode", async (req, res) => {
-  let result = await connection.queryAsync(
-    "SELECT * FROM stock_price WHERE stock_id = ? ORDER BY date",
-    req.params.stockCode
-  );
-  res.render("stock/detail", {
-    stockPrices: result,
-  });
 });
 
 app.listen(3000, async () => {
