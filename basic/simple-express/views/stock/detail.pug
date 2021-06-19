@@ -16,6 +16,6 @@ block content
         td #{price.high_price}
         td #{price.low_price}
         td #{price.close_price}
-    .pagination
-      -for(var p = 1; p<=pagination.lastPage;p++)
-        a(href = `/stock/${stockCheck.stock_id}?page=${p}`,class=p==pagination.currentPage?"active":"") #{p}
+  .pagination
+    -for(var p = 1; p<=pagination.lastPage;p++)
+      a(href = `/stock/${stockCheck.stock_id}?page=${p}`,class=p==pagination.currentPage?"active":"") #{p}

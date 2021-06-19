@@ -20,9 +20,9 @@ router.get("/:stockCode", async (req, res) => {
     "SELECT * FROM stock WHERE stock_id = ?",
     req.params.stockCode
   );
-  //   if (stockCheck.length == 0) {
-  //     throw new Error("無此代碼");
-  //   }
+  if (stockCheck.length === 0) {
+    throw new Error("無此代碼");
+  }
   stockCheck = stockCheck[0];
   console.log(stockCheck);
   //   無此代碼這段沒效果
