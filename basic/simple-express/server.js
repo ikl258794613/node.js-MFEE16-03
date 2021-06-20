@@ -11,8 +11,9 @@ app.use(express.static("public"));
 //第一個views是變數，第2個是資料夾名稱
 app.set("views", "views");
 app.set("view engine", "pug");
-//中介函式
 
+//中介函式
+app.use(express.urlencoded({ extended: false }));
 let stockRouter = require("./routes/stock");
 app.use("/stock", stockRouter);
 
