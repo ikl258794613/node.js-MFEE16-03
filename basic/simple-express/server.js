@@ -16,6 +16,11 @@ app.set("view engine", "pug");
 let stockRouter = require("./routes/stock");
 app.use("/stock", stockRouter);
 
+let apiRouter = require("./routes/api");
+app.use("/api", apiRouter);
+
+let authRouter = require("./routes/auth");
+app.use("/auth", authRouter);
 //路由
 app.use(function (req, res, next) {
   console.log(`有人在${today}來訪問`);
@@ -39,6 +44,11 @@ app.get("/about", function (req, res, next) {
 
 app.get("/test", function (req, res) {
   res.send("test");
+});
+
+app.use(function (req, res, next) {
+  res.status(404);
+  res.render("404");
 });
 
 app.listen(3000, async () => {
