@@ -3,9 +3,9 @@ const router = express.Router();
 const { body, validationResult } = require("express-validator");
 const connection = require("../utils/db");
 const bcrypt = require("bcrypt");
+
 const path = require("path");
 const multer = require("multer");
-
 const myStorage = multer.diskStorage({
   destination: function (req, file, cb) {
     // routes/auth.js -> 現在的位置
@@ -40,7 +40,6 @@ const uploader = multer({
     fileSize: 1024 * 1024,
   },
 });
-
 const registerRules = [
   body("email").isEmail().withMessage("請正確輸入 Email 格式"),
   body("password").isLength({ min: 6 }),
@@ -48,9 +47,13 @@ const registerRules = [
     return value === req.body.password;
   }),
 ];
+
+//router
+
 router.get("/register", (req, res) => {
   res.render("auth/register");
 });
+
 //registerRules 要寫在裡面
 router.post(
   "/register",
@@ -58,7 +61,6 @@ router.post(
   registerRules,
   async (req, res, next) => {
     console.log(req.body);
-
     const Result = validationResult(req);
     if (!Result.isEmpty()) {
       return next(new Error("註冊有問題"));
@@ -73,6 +75,7 @@ router.post(
     }
     //通過check,寫入資料庫
     //加密 await bcrypt.hash(req.body.password, 10)
+    let filepath = req.file ? "/uploads/" + req.file.filename : null;
     let result = await connection.queryAsync(
       "INSERT INTO members (email,password,name,photo) VALUES (?) ",
       [
@@ -80,15 +83,75 @@ router.post(
           req.body.email,
           await bcrypt.hash(req.body.password, 10),
           req.body.name,
-          `/uploads/${req.file.filename}`,
+          filepath,
         ],
       ]
     );
     res.send("註冊成功");
   }
 );
+
+// router.get("/login", (req, res) => {
+//   res.render("auth/login");
+// });
+
 router.get("/login", (req, res) => {
+  if (req.session.member) {
+    req.session.message = {
+      title: "重複登入",
+      text: "你已經登入",
+    };
+    return res.redirect(303, "/");
+  }
   res.render("auth/login");
+});
+
+const loginRules = [
+  body("email").isEmail(),
+  body("password").isLength({ min: 6 }),
+];
+
+router.post("/login", loginRules, async (req, res) => {
+  let loginResult = validationResult(req);
+  if (!loginResult.isEmpty()) {
+    return next(new Error("登入資訊錯誤失敗"));
+  }
+  let member = await connection.queryAsync(
+    "SELECT * FROM members WHERE email=?",
+    req.body.email
+  );
+  console.log(member);
+  if (member.length === 0) {
+    return next(new Error("查無此帳號"));
+  }
+
+  member = member[0];
+  let result = await bcrypt.compare(req.body.password, member.password);
+  if (result) {
+    req.session.member = {
+      email: member.email,
+      name: member.name,
+      photo: member.photo,
+    };
+    req.session.message = {
+      title: "登入成功",
+      text: "帳號密碼正確",
+    };
+
+    res.redirect(303, "/");
+  } else {
+    req.session.member = null;
+    req.session.message = {
+      title: "登入失敗",
+      text: "帳號密碼錯誤",
+    };
+    res.redirect(303, "/auth/login");
+  }
+});
+
+router.get("/logout", (req, res) => {
+  req.session.member = null;
+  res.redirect(303, "/");
 });
 
 module.exports = router;

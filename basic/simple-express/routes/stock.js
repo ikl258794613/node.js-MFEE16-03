@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const authMW = require("../middlewares/auth");
 const connection = require("../utils/db");
 
 router.get("/", async function (req, res) {
@@ -15,7 +16,7 @@ router.get("/", async function (req, res) {
   });
 });
 
-router.get("/:stockCode", async (req, res) => {
+router.get("/:stockCode", authMW.loginCheckMiddleware, async (req, res) => {
   let stockCheck = await connection.queryAsync(
     "SELECT * FROM stock WHERE stock_id = ?",
     req.params.stockCode
